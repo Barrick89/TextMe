@@ -8,6 +8,9 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -36,5 +39,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
+
+        List<TextMeMessage> messages = new ArrayList<>();
+        messageAdapter = new MessageAdapter(this, messages);
+        recyclerView.setAdapter(messageAdapter);
     }
 }
