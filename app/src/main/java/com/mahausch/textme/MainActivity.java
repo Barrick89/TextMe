@@ -18,7 +18,6 @@ import android.widget.ProgressBar;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
@@ -28,19 +27,10 @@ public class MainActivity extends AppCompatActivity {
 
     private MessageAdapter messageAdapter;
 
-    @BindView(R.id.recyclerView)
     private RecyclerView recyclerView;
-
-    @BindView(R.id.progressBar)
     private ProgressBar progressBar;
-
-    @BindView(R.id.photoPickerButton)
     private ImageButton photoPickerButton;
-
-    @BindView(R.id.messageEditText)
     private EditText messageEditText;
-
-    @BindView(R.id.sendButton)
     private Button sendButton;
 
     private String username;
@@ -52,6 +42,12 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         username = ANONYMOUS;
+
+        progressBar = findViewById(R.id.progressBar);
+        recyclerView = findViewById(R.id.recyclerView);
+        photoPickerButton = findViewById(R.id.photoPickerButton);
+        messageEditText = findViewById(R.id.messageEditText);
+        sendButton = findViewById(R.id.sendButton);
 
         // Initialize message RecyclerView and its adapter
         List<TextMeMessage> messages = new ArrayList<>();
