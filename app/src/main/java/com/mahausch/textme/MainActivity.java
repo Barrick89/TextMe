@@ -16,6 +16,8 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static final String ANONYMOUS = "anonymous";
+
     private MessageAdapter messageAdapter;
 
     @BindView(R.id.recyclerView)
@@ -33,12 +35,15 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.sendButton)
     private Button sendButton;
 
+    private String username;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         ButterKnife.bind(this);
+
+        username = ANONYMOUS;
 
         List<TextMeMessage> messages = new ArrayList<>();
         messageAdapter = new MessageAdapter(this, messages);
