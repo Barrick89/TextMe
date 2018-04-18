@@ -3,6 +3,9 @@ package com.mahausch.textme;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -46,8 +49,52 @@ public class MainActivity extends AppCompatActivity {
 
         username = ANONYMOUS;
 
+        // Initialize message RecyclerView and its adapter
         List<TextMeMessage> messages = new ArrayList<>();
         messageAdapter = new MessageAdapter(this, messages);
         recyclerView.setAdapter(messageAdapter);
+
+        // Initialize progress bar
+        progressBar.setVisibility(ProgressBar.INVISIBLE);
+
+        // ImagePickerButton shows an image picker to upload a image for a message
+        photoPickerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO: Fire an intent to show an image picker
+            }
+        });
+
+        // Enable Send button when there's text to send
+        messageEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (charSequence.toString().trim().length() > 0) {
+                    sendButton.setEnabled(true);
+                } else {
+                    sendButton.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
+       
+
+        // Send button sends a message and clears the EditText
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO: Send messages on click
+
+                // Clear input box
+                messageEditText.setText("");
+            }
+        });
     }
 }
