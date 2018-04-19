@@ -65,8 +65,10 @@ public class MainActivity extends AppCompatActivity {
         // Initialize message RecyclerView and its adapter
         messages = new ArrayList<>();
         messageAdapter = new MessageAdapter(this, messages);
-        recyclerView.setLayoutManager(new LinearLayoutManager
-                (this, LinearLayoutManager.VERTICAL, false));
+        LinearLayoutManager manager = new LinearLayoutManager
+                (this, LinearLayoutManager.VERTICAL, false);
+        manager.setStackFromEnd(true);
+        recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(messageAdapter);
 
         // Initialize progress bar
