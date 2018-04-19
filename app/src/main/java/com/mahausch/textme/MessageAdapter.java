@@ -13,9 +13,6 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageViewHolder> {
 
     private Context context;
@@ -69,18 +66,15 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
     class MessageViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.photoImageView)
         ImageView photoImageView;
-
-        @BindView(R.id.messageTextView)
         TextView messageTextView;
-
-        @BindView(R.id.nameTextView)
-        TextView nameTextView;
+        TextView authorTextView;
 
         public MessageViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+            photoImageView = itemView.findViewById(R.id.photoImageView);
+            messageTextView = itemView.findViewById(R.id.messageTextView);
+            authorTextView = itemView.findViewById(R.id.nameTextView);
         }
 
     }
