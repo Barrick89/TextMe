@@ -123,45 +123,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        childEventListener = new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                TextMeMessage message = dataSnapshot.getValue(TextMeMessage.class);
-                messages.add(message);
-                messageAdapter.swapData(messages);
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        };
-
-        databaseReference.addChildEventListener(childEventListener);
-
         authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     //user is signed in
+                    onSignedInInitialize(user.getDisplayName());
                 } else {
                     //user is signed out
+                    onSignedOutCleanup();
                     startActivityForResult(
                             AuthUI.getInstance()
                                     .createSignInIntentBuilder()
@@ -177,6 +148,49 @@ public class MainActivity extends AppCompatActivity {
         };
     }
 
+    private void onSignedInInitialize(String username) {
+        this.username = username;
+
+        if (childEventListener == null) {
+            childEventListener = new ChildEventListener() {
+                @Override
+                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                    TextMeMessage message = dataSnapshot.getValue(TextMeMessage.class);
+                    messages.add(message);
+                    messageAdapter.swapData(messages);
+                }
+
+                @Override
+                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                }
+
+                @Override
+                public void onChildRemoved(DataSnapshot dataSnapshot) {
+                }
+
+                @Override
+                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                }
+            };
+
+            databaseReference.addChildEventListener(childEventListener);
+        }
+    }
+
+    private void onSignedOutCleanup() {
+        this.username = ANONYMOUS;
+        messageAdapter.swapData(null);
+
+        if (childEventListener != null) {
+            databaseReference.removeEventListener(childEventListener);
+            childEventListener = null;
+        }
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -186,7 +200,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        firebaseAuth.removeAuthStateListener(authStateListener);
+        if (authStateListener != null) {
+            firebaseAuth.removeAuthStateListener(authStateListener);
+        }
+
+        if (childEventListener != null) {
+            databaseReference.removeEventListener(childEventListener);
+            childEventListener = null;
+        }
+        messageAdapter.swapData(null);
     }
 
     @Override
