@@ -97,7 +97,8 @@ public class MainActivity extends AppCompatActivity {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: Send messages on click
+                TextMeMessage friendlyMessage = new TextMeMessage
+                        (messageEditText.getText().toString(), username, null);
 
                 // Clear input box
                 messageEditText.setText("");
