@@ -15,6 +15,9 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -31,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     private MessageAdapter messageAdapter;
+    private ChildEventListener childEventListener;
 
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
@@ -39,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private Button sendButton;
 
     private String username;
+    private List<TextMeMessage> messages;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         sendButton = findViewById(R.id.sendButton);
 
         // Initialize message RecyclerView and its adapter
-        List<TextMeMessage> messages = new ArrayList<>();
+        messages = new ArrayList<>();
         messageAdapter = new MessageAdapter(this, messages);
         recyclerView.setAdapter(messageAdapter);
 
@@ -99,11 +104,43 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 TextMeMessage friendlyMessage = new TextMeMessage
                         (messageEditText.getText().toString(), username, null);
+                databaseReference.push().setValue(friendlyMessage);
 
                 // Clear input box
                 messageEditText.setText("");
             }
         });
+
+        childEventListener = new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                TextMeMessage message = dataSnapshot.getValue(TextMeMessage.class);
+                messages.add(message);
+                messageAdapter.swapData(messages);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+
+        databaseReference.addChildEventListener(childEventListener);
     }
 
     @Override

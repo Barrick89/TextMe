@@ -59,6 +59,13 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         return messageList.size();
     }
 
+    public void swapData(List<TextMeMessage> list) {
+        if (list != null) {
+            messageList = list;
+            notifyDataSetChanged();
+        }
+    }
+
 
     class MessageViewHolder extends RecyclerView.ViewHolder {
 
