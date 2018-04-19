@@ -15,6 +15,9 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     public static final String ANONYMOUS = "anonymous";
     public static final int DEFAULT_MSG_LENGTH_LIMIT = 1000;
 
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference databaseReference;
     private MessageAdapter messageAdapter;
 
     private RecyclerView recyclerView;
@@ -42,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         username = ANONYMOUS;
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference().child("messages");
 
         progressBar = findViewById(R.id.progressBar);
         recyclerView = findViewById(R.id.recyclerView);
