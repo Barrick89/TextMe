@@ -2,6 +2,7 @@ package com.mahausch.textme;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -64,6 +65,8 @@ public class MainActivity extends AppCompatActivity {
         // Initialize message RecyclerView and its adapter
         messages = new ArrayList<>();
         messageAdapter = new MessageAdapter(this, messages);
+        recyclerView.setLayoutManager(new LinearLayoutManager
+                (this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(messageAdapter);
 
         // Initialize progress bar
