@@ -1,5 +1,6 @@
 package com.mahausch.textme;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
@@ -146,6 +148,17 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RC_SIGN_IN) {
+            if (resultCode == RESULT_CANCELED) {
+                Toast.makeText(this, R.string.Sign_in_canceled, Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        }
     }
 
     private void onSignedInInitialize(String username) {
