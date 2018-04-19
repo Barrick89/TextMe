@@ -68,13 +68,13 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
         ImageView photoImageView;
         TextView messageTextView;
-        TextView authorTextView;
+        TextView nameTextView;
 
         public MessageViewHolder(View itemView) {
             super(itemView);
             photoImageView = itemView.findViewById(R.id.photoImageView);
             messageTextView = itemView.findViewById(R.id.messageTextView);
-            authorTextView = itemView.findViewById(R.id.nameTextView);
+            nameTextView = itemView.findViewById(R.id.nameTextView);
         }
 
     }
