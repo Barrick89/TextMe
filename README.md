@@ -8,5 +8,5 @@ The app makes use of a number of Google Firebase Services like Authentification,
 Database, Storage and Analytics. Via Firebase RemoteConfig parameters like
 the message length limit can be changed easily.
 
-<img src="PerfectWeekend_Images/device-2018-04-20-144549.png" width="300"/><img src="PerfectWeekend_Images/device-2018-04-20-144322.png" width="300"/>
+<img src="TextMe_Images/device-2018-04-20-144549.png" width="300"/><img src="TextMe_Images/device-2018-04-20-144322.png" width="300"/>
 
