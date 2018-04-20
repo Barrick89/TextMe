@@ -140,8 +140,7 @@ public class MainActivity extends AppCompatActivity {
                                     .createSignInIntentBuilder()
                                     .setIsSmartLockEnabled(false)
                                     .setAvailableProviders(Arrays.asList(
-                                            new AuthUI.IdpConfig.EmailBuilder().build(),
-                                            new AuthUI.IdpConfig.GoogleBuilder().build()))
+                                            new AuthUI.IdpConfig.EmailBuilder().build()))
                                     .build(),
                             RC_SIGN_IN);
 
@@ -196,6 +195,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void onSignedOutCleanup() {
         this.username = ANONYMOUS;
+        messages.clear();
         messageAdapter.swapData(null);
 
         if (childEventListener != null) {
@@ -221,6 +221,7 @@ public class MainActivity extends AppCompatActivity {
             databaseReference.removeEventListener(childEventListener);
             childEventListener = null;
         }
+        messages.clear();
         messageAdapter.swapData(null);
     }
 
