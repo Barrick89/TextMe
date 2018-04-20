@@ -28,6 +28,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,7 +45,10 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
     private FirebaseDatabase firebaseDatabase;
+
     private DatabaseReference databaseReference;
+    private StorageReference storageReference;
+
     private MessageAdapter messageAdapter;
     private ChildEventListener childEventListener;
 
@@ -65,9 +69,10 @@ public class MainActivity extends AppCompatActivity {
         username = ANONYMOUS;
         firebaseDatabase = FirebaseDatabase.getInstance();
         firebaseStorage = FirebaseStorage.getInstance();
-        databaseReference = firebaseDatabase.getReference().child("messages");
-
         firebaseAuth = FirebaseAuth.getInstance();
+
+        databaseReference = firebaseDatabase.getReference().child("messages");
+        storageReference = firebaseStorage.getReference().child("chat_photos");
 
         progressBar = findViewById(R.id.progressBar);
         recyclerView = findViewById(R.id.recyclerView);
