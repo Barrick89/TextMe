@@ -172,6 +172,7 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
+        //Retrieve value for message length limit via Firebase Remote Config
         FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
                 .setDeveloperModeEnabled(BuildConfig.DEBUG)
                 .build();
@@ -191,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         }
-
+        //Push image to Firebase Storage
         if (requestCode == RC_PHOTO_PICKER && resultCode == RESULT_OK) {
             Uri selectedImageUri = data.getData();
             StorageReference photoRef = storageReference.child(selectedImageUri.getLastPathSegment());
