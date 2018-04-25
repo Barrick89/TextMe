@@ -35,6 +35,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     public void onBindViewHolder(MessageViewHolder holder, int position) {
         TextMeMessage message = messageList.get(position);
 
+        //If TextMeMessage object has PhotoURL then it is an image and gets displayed
         boolean isPhoto = message.getPhotoUrl() != null;
         if (isPhoto) {
             holder.messageTextView.setVisibility(View.GONE);
